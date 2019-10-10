@@ -1,0 +1,1 @@
+var BROWSER = chrome;

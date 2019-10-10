@@ -1,0 +1,37 @@
+
+
+{
+   "name": "Sample Extension",
+   "version": "1.0",
+   "description": "Hello World",
+   "permissions": ["https://docs.google.com/spreadsheets/","https://script.google.com/",
+      "https://sheets.googleapis.com/*","identity", "identity.email"
+   
+   ],
+   "author": "Jess",
+   "icons":{  
+      "128":"img/icon.png"
+   },
+   "background": {
+      "scripts": ["shared.function.js","background.js"],
+      "persistent": true
+    },
+   "content_scripts": [{
+     "matches": ["file:///*"],
+     "js"     : ["popup.js"]
+   }],
+   "browser_action":{  
+      "default_icon":"img/icon.png",
+      "default_title":"Execution API Example",
+      "default_popup":"popup.html"
+   },
+  "oauth2": {
+     "client_id": "1018444700498-8v2eo61dh0s8nbf6e77sm6ha9dc76s8t.apps.googleusercontent.com",
+     "scopes": [
+         "https://www.googleapis.com/auth/spreadsheets.readonly",
+         "https://www.googleapis.com/auth/userinfo.email",
+         "profile"
+    ]},
+   "content_security_policy": "script-src 'self' 'unsafe-eval' https://apis.google.com/; object-src 'self'",
+   "manifest_version": 2
+ }
