@@ -1,4 +1,5 @@
 var BROWSER = chrome;
+var extjQuery = jQuery.noConflict();
 var common = {
     setLocal: function(data={},callback=function(){}){
         BROWSER.storage.local.set(data,callback);
