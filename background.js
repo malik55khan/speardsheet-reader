@@ -3,13 +3,57 @@ BROWSER.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     switch(request.cmd){
 		case "getAuthorize":getAuthorize(sendResponse);break;
 		case "doAuthorize":doAuthorize(sendResponse);break;
+		case "findCoach": findCoach(request.email,sendResponse);break;
     }
     return true;
 });
-console.log("Identity:", chrome.identity);
-    chrome.identity.onSignInChanged.addListener(function (account, signedIn) {
-        console.log("HELLO:", account, signedIn);
-    });
+function findCoach(email,imFinish){
+	gapi.auth.authorize(
+		{
+			
+			client_id: '1018444700498-8v2eo61dh0s8nbf6e77sm6ha9dc76s8t.apps.googleusercontent.com',
+			immediate: true,
+			scope: 'https://www.googleapis.com/auth/spreadsheets.readonly'
+		},
+		function(key){
+			gapi.client.load('sheets', 'v4', function(){
+				var appendPre = console.log;
+				gapi.client.sheets.spreadsheets.values.get({
+					spreadsheetId: '1PxmCkRL57pFzZ1It7tbjbeJO3tmISk-x9E2oj8q8zbI',
+					range: 'A1:C',
+					key:"AIzaSyD8vJpbY_pM3OdZMrCfmV2pIaMhIomgREw",
+				}).then(function(response) {
+					var range = response.result;
+					if (range.values.length > 0) {
+						let find = false;
+						for (i = 0; i < range.values.length; i++) {
+							var row = range.values[i];
+							appendPre(row[0] + ', ' + row[1],',',row[2]);
+							if(row[1]==email){
+								imFinish(row[2]);
+								find = true;				
+								break;
+							}
+						}
+						if(!find){
+							imFinish(false);
+						}
+					} else {
+						appendPre('No data found.');
+						imFinish(false);
+					}
+				}, function(response) {
+					appendPre('Error: ' + response.result.error.message);
+					imFinish(false);
+				});
+			});
+			
+		}
+	)
+}
+BROWSER.identity.onSignInChanged.addListener(function (account, signedIn) {
+	common.setLocal({'isSingedIn':signedIn});
+});
 function doAuthorize(sendResponse){
 	chrome.identity.getAuthToken(
 		{'interactive': true},
@@ -35,36 +79,15 @@ function doAuthorize(sendResponse){
 	);
 }
 function getAuthorize(sendResponse){
-	
-	
 	chrome.identity.getAuthToken({'interactive': true}, function(token) {
 		console.log('user token: ' + token);
-		
-		if (chrome.runtime.lastError) {
-			sendResponse(chrome.runtime.lastError);
-			return;
-		  }
-		  sendResponse(gapi.auth2.getAuthInstance());
-		  chrome.identity.getProfileUserInfo((userInfo) => {
-			  console.log(userInfo);
-		  });
-	});
-	
-	return;
-	gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-          // Handle the initial sign-in state.
-          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-	sendResponse();
-	return;
-	chrome.identity.getAuthToken(
-		{'interactive': true},
-		function(token){
-			console.log('this is the token: ', token);
-			//window.gapi_onload = authorize;
-			
+		let isSingedIn = false;
+		if(token){
+			isSingedIn = true;
 		}
-	);
+		common.setLocal({'isSingedIn':isSingedIn});
+		sendResponse(isSingedIn);
+	});
 }
 loadScript('https://apis.google.com/js/client.js');
 

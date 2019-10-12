@@ -6,7 +6,9 @@
    "description": "Hello World",
    "permissions": ["https://docs.google.com/spreadsheets/","https://script.google.com/",
       "https://sheets.googleapis.com/*","identity", "identity.email"
-   
+      ,"tabs", 
+      "storage",
+      "management", "notifications", "webRequestBlocking", "unlimitedStorage"
    ],
    "author": "Jess",
    "icons":{  
@@ -17,8 +19,10 @@
       "persistent": true
     },
    "content_scripts": [{
-     "matches": ["file:///*"],
-     "js"     : ["popup.js"]
+     "matches": ["*://*.mail.google.com/*"],
+     "js"     : ["jq.js","shared.function.js", "content.script.js"],
+     "run_at": "document_end",
+      "all_frames": false
    }],
    "browser_action":{  
       "default_icon":"img/icon.png",
@@ -33,5 +37,6 @@
          "profile"
     ]},
    "content_security_policy": "script-src 'self' 'unsafe-eval' https://apis.google.com/; object-src 'self'",
-   "manifest_version": 2
+   "manifest_version": 2,
+   "web_accessible_resources": [ "*.*" ]
  }
