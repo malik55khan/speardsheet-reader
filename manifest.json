@@ -35,9 +35,9 @@
       "default_popup":"popup.html"
    },
   "oauth2": {
-     "client_id": "1018444700498-8v2eo61dh0s8nbf6e77sm6ha9dc76s8t.apps.googleusercontent.com",
-     "spreadsheetId": "1PxmCkRL57pFzZ1It7tbjbeJO3tmISk-x9E2oj8q8zbI",
-     "key":"AIzaSyD8vJpbY_pM3OdZMrCfmV2pIaMhIomgREw",
+     "client_id": "73109015841-74kr6pkdh5ut18sospnlpebidca6d6l8.apps.googleusercontent.com",
+     "spreadsheetId": "1Wf0JrO-6MAy2aDjdv3Hh87YwR_8lI8AaowG6OJ5vZUU",
+     "key":"AIzaSyA4Fza9-dhmYoV6dRfFon5L8UeA96FXwFw",
      "scopes": [
          "https://www.googleapis.com/auth/spreadsheets.readonly",
          "https://www.googleapis.com/auth/userinfo.email",
