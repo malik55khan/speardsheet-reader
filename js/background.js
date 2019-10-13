@@ -77,37 +77,6 @@ function getAuthorize(sendResponse){
 		if(token){
 			isSingedIn = true;
 		}
-		gapi.auth.authorize(
-			authorizationObject,
-			function(key){
-				gapi.client.load('sheets', 'v4', function(){
-					var appendPre = console.log;
-					gapi.client.sheets.spreadsheets.values.get({
-						spreadsheetId: manifestData.oauth2.spreadsheetId,
-						range: 'A1:C',
-						key: manifestData.oauth2.key,
-					}).then(function(response) {
-						var range = response.result;
-						if (range.values.length > 0) {
-							let find = false;
-							for (i = 0; i < range.values.length; i++) {
-								var row = range.values[i];
-								appendPre(row[0] + ', ' + row[1],',',row[2]);
-								
-							}
-							
-						} else {
-							appendPre('No data found.');
-							
-						}
-					}, function(response) {
-						appendPre('Error: ' + response.result.error.message);
-						
-					});
-				});
-				
-			}
-		);
 		common.setLocal({'isSingedIn':isSingedIn});
 		sendResponse(isSingedIn);
 	});
