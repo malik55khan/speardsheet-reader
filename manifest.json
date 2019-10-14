@@ -35,9 +35,9 @@
       "default_popup":"popup.html"
    },
   "oauth2": {
-     "client_id": "1018444700498-8v2eo61dh0s8nbf6e77sm6ha9dc76s8t.apps.googleusercontent.com",
-     "spreadsheetId": "1PxmCkRL57pFzZ1It7tbjbeJO3tmISk-x9E2oj8q8zbI",
-     "key":"AIzaSyD8vJpbY_pM3OdZMrCfmV2pIaMhIomgREw",
+     "client_id": "",
+     "spreadsheetId": "",
+     "key":"",
      "scopes": [
          "https://www.googleapis.com/auth/spreadsheets.readonly",
          "https://www.googleapis.com/auth/userinfo.email",
